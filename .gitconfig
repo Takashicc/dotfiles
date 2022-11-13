@@ -1,0 +1,14 @@
+[user]
+	name = Takashicc
+	email = 105186894+Takashicc@users.noreply.github.com
+	signingkey = XXXXXX # Copy the key from gpg
+[alias]
+	st = status
+	ps = push
+	cm = commit
+	sw = switch
+	ch = checkout
+	br = branch
+	df = diff
+[commit]
+	gpgsign = true
