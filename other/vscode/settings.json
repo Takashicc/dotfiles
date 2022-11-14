@@ -1,0 +1,27 @@
+{
+    // Workbench
+    "workbench.startupEditor": "none",
+    "workbench.colorTheme": "Theme (Italic)",
+    "workbench.editor.untitled.hint": "hidden",
+    "security.workspace.trust.untrustedFiles": "open",
+    // Window
+    "window.zoomLevel": 1,
+    // Editor
+    "editor.fontFamily": "FiraCode Nerd Font",
+    "editor.minimap.enabled": true,
+    "editor.formatOnSave": true,
+    "editor.wordWrap": "on",
+    // Terminal
+    "terminal.integrated.fontFamily": "FiraCode Nerd Font",
+    "terminal.integrated.fontSize": 15,
+    "terminal.integrated.enableMultiLinePasteWarning": false,
+    // Files
+    "files.exclude": {
+        "**/.git": true,
+        "**/.svn": true,
+        "**/.hg": true,
+        "**/CVS": true,
+        "**/.DS_Store": true,
+        "**/Thumbs.db": true
+    },
+}
