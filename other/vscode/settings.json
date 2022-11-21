@@ -1,7 +1,8 @@
 {
     // Workbench
     "workbench.startupEditor": "none",
-    "workbench.colorTheme": "Theme (Italic)",
+    "workbench.colorTheme": "Community Material Theme High Contrast",
+    "workbench.iconTheme": "eq-material-theme-icons-light",
     "workbench.editor.untitled.hint": "hidden",
     "security.workspace.trust.untrustedFiles": "open",
     // Window
@@ -23,5 +24,9 @@
         "**/CVS": true,
         "**/.DS_Store": true,
         "**/Thumbs.db": true
+    },
+    // Language specific settings
+    "[markdown]": {
+        "editor.defaultFormatter": "DavidAnson.vscode-markdownlint"
     },
 }
