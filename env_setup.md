@@ -2,6 +2,8 @@
 
 ## Tools
 
+### Commands
+
 - [starship](https://github.com/starship/starship)
   - Customizable prompt
 - [zoxide](https://github.com/ajeetdsouza/zoxide)
@@ -12,3 +14,8 @@
   - A cat(1) clone with syntax highlighting and Git integration
 - [volta](https://github.com/volta-cli/volta)
   - Node engine manager
+
+### Apps
+
+- [kitty](https://github.com/kovidgoyal/kitty)
+  - Cross-platform, fast, feature-rich, GPU based terminal
