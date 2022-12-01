@@ -1,6 +1,8 @@
 eval "$(starship init zsh)"
 eval "$(zoxide init zsh)"
 
+alias x86='arch -x86_64 zsh'
+alias arm='arch -arm64 zsh'
 alias ls='lsd'
 alias l='lsd -l'
 alias la='lsd -al'
