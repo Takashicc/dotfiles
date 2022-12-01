@@ -15,3 +15,6 @@ export VOLTA_HOME=~/.volta
 export PATH=$PATH:~/go/bin:$VOLTA_HOME/bin
 export GPG_TTY=$(tty)
 export BASH_SILENCE_DEPRECATION_WARNING=1
+
+zstyle ':completion:*' matcher-list '' 'm:{[:lower:]}={[:upper:]}' '+m:{[:upper:]}={[:lower:]}'
+autoload -U compinit && compinit
