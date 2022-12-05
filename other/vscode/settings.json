@@ -12,6 +12,9 @@
     "editor.minimap.enabled": true,
     "editor.formatOnSave": true,
     "editor.wordWrap": "on",
+    "editor.codeActionsOnSave": {
+        "source.organizeImports": true,
+    },
     // Terminal
     "terminal.integrated.fontFamily": "FiraCode Nerd Font",
     "terminal.integrated.fontSize": 15,
@@ -35,6 +38,21 @@
     "[jsonc]": {
         "editor.defaultFormatter": "vscode.json-language-features"
     },
+    "[python]": {
+        "editor.defaultFormatter": "ms-python.python"
+    },
+    "python.linting.lintOnSave": true,
+    "python.linting.pylintEnabled": false,
+    "python.linting.flake8Enabled": true,
+    "python.linting.flake8Args": [
+        "--ignore=E501",
+        "--max-complexity=20"
+    ],
+    "python.formatting.provider": "autopep8",
+    "python.formatting.autopep8Args": [
+        "--aggressive",
+        "--aggressive"
+    ],
     // Extension settings
     "indentRainbow.indicatorStyle": "light",
     "redhat.telemetry.enabled": false
