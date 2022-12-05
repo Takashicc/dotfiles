@@ -13,11 +13,13 @@ alias cls='clear'
 
 export RUBY_CONFIGURE_OPTS="--with-openssl-dir=$(brew --prefix openssl@1.1)"
 export VOLTA_HOME=~/.volta
-export PATH=$PATH:~/go/bin:$VOLTA_HOME/bin:~/.rbenv/bin
+export PYENV_ROOT=~/.pyenv
+export PATH=$PATH:~/go/bin:$VOLTA_HOME/bin:$PYENV_ROOT/bin:~/.rbenv/bin
 export GPG_TTY=$(tty)
 export BASH_SILENCE_DEPRECATION_WARNING=1
 
 eval "$(rbenv init -)"
+eval "$(pyenv init -)"
 
 zstyle ':completion:*' matcher-list '' 'm:{[:lower:]}={[:upper:]}' '+m:{[:upper:]}={[:lower:]}'
 autoload -U compinit && compinit
