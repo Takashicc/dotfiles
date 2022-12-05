@@ -18,6 +18,8 @@
   - Ruby version manager
 - [pyenv](https://github.com/pyenv/pyenv)
   - Python version manager
+- [poetry](https://python-poetry.org)
+  - Python package and dependency manager
 
 ### Apps
 
