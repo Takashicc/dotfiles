@@ -41,6 +41,21 @@
     "[python]": {
         "editor.defaultFormatter": "ms-python.python"
     },
+    "[javascript]": {
+        "editor.defaultFormatter": "rome.rome"
+    },
+    "[typescript]": {
+        "editor.defaultFormatter": "rome.rome"
+    },
+    "[javascriptreact]": {
+        "editor.defaultFormatter": "rome.rome"
+    },
+    "[typescriptreact]": {
+        "editor.defaultFormatter": "rome.rome"
+    },
+    "[yaml]": {
+        "editor.defaultFormatter": "redhat.vscode-yaml"
+    },
     "python.linting.lintOnSave": true,
     "python.linting.pylintEnabled": false,
     "python.linting.flake8Enabled": true,
