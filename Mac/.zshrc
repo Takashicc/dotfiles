@@ -10,11 +10,13 @@ alias cd='z'
 alias python='python3'
 alias cat='bat'
 alias cls='clear'
+alias clip='pbcopy'
 
 export RUBY_CONFIGURE_OPTS="--with-openssl-dir=$(brew --prefix openssl@1.1)"
 export VOLTA_HOME=~/.volta
 export PYENV_ROOT=~/.pyenv
-export PATH=$PATH:~/go/bin:$VOLTA_HOME/bin:$PYENV_ROOT/bin:~/.rbenv/bin
+export QT5_BIN=/opt/homebrew/opt/qt@5/bin
+export PATH=$PATH:~/go/bin:$VOLTA_HOME/bin:$PYENV_ROOT/bin:~/.rbenv/bin:$QT5_BIN
 export GPG_TTY=$(tty)
 export BASH_SILENCE_DEPRECATION_WARNING=1
 
