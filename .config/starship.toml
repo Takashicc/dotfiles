@@ -1,3 +1,5 @@
+command_timeout = 2000
+
 [aws]
 format = '\[[$symbol($profile)(\($region\))(\[$duration\])]($style)\]'
 
@@ -30,6 +32,10 @@ format = '\[[$symbol($version)]($style)\]'
 
 [deno]
 format = '\[[$symbol($version)]($style)\]'
+
+[directory]
+truncation_length = 10
+truncate_to_repo = false
 
 [docker_context]
 format = '\[[$symbol$context]($style)\]'
