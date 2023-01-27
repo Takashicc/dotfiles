@@ -6,6 +6,17 @@
 
 - [vscode.md](./vscode.md)
 
+### Common
+
+Copy common settings.
+
+- [common.sh](./bin/common.sh)
+
+  ```sh
+  chmod a+x ./bin/common.sh
+  ./bin/common.sh
+  ```
+
 ### Commands
 
 - [starship](https://github.com/starship/starship)
