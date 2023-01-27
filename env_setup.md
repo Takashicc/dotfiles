@@ -2,6 +2,10 @@
 
 ## Tools
 
+### VSCode
+
+- [vscode.md](./vscode.md)
+
 ### Commands
 
 - [starship](https://github.com/starship/starship)
