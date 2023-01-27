@@ -1,3 +1,5 @@
+#!/usr/bin/env bash
+
 code --install-extension DavidAnson.vscode-markdownlint
 code --install-extension EditorConfig.EditorConfig
 code --install-extension Equinusocio.vsc-community-material-theme
