@@ -2,10 +2,6 @@
 
 ## Tools
 
-### VSCode
-
-- [vscode.md](./vscode.md)
-
 ### Common
 
 Copy common settings.
@@ -16,6 +12,25 @@ Copy common settings.
   chmod a+x ./bin/common.sh
   ./bin/common.sh
   ```
+
+### VSCode
+
+#### VSCode extensions
+
+- List all extensions
+
+  ```sh
+  code --list-extensions | sort | awk '{print "code --install-extension " $0}'
+  ```
+
+- Install extensions
+
+  - [vscode_extensions_install.sh](./bin/vscode_extensions_install.sh)
+
+    ```sh
+    chmod a+x ./bin/vscode_extensions_install.sh
+    ./bin/vscode_extensions_install.sh
+    ```
 
 ### Commands
 
