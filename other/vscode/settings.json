@@ -30,6 +30,19 @@
         "**/.DS_Store": true,
         "**/Thumbs.db": true
     },
+    // Extension specific settings
+    "indentRainbow.indicatorStyle": "light",
+    "cSpell.enableFiletypes": [
+        "makefile"
+    ],
+    "cSpell.userWords": [
+        "actix",
+        "dotenv",
+        "jsonwebtoken",
+        "noveling",
+        "struct"
+    ],
+    "redhat.telemetry.enabled": false,
     // Language specific settings
     "[markdown]": {
         "editor.defaultFormatter": "DavidAnson.vscode-markdownlint"
@@ -70,7 +83,15 @@
         "--aggressive",
         "--aggressive"
     ],
-    // Extension settings
-    "indentRainbow.indicatorStyle": "light",
-    "redhat.telemetry.enabled": false
+    "ruby.useBundler": true,
+    "ruby.useLanguageServer": true,
+    "ruby.lint": {
+        "rubocop": {
+            "useBundler": true,
+            "except": [
+                "Metrics"
+            ]
+        }
+    },
+    "go.toolsManagement.autoUpdate": true
 }
