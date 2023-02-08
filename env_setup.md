@@ -50,6 +50,8 @@ Copy common settings.
   - Python version manager
 - [poetry](https://python-poetry.org)
   - Python package and dependency manager
+- [goenv](https://github.com/syndbg/goenv)
+  - Go Version Management: goenv
 
 ### Apps
 

@@ -1,5 +1,6 @@
 eval "$(starship init zsh)"
 eval "$(zoxide init zsh)"
+eval "$(goenv init -)"
 
 alias x86='arch -x86_64 zsh'
 alias arm='arch -arm64 zsh'
