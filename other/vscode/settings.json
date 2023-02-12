@@ -5,8 +5,6 @@
     "workbench.iconTheme": "eq-material-theme-icons-light",
     "workbench.editor.untitled.hint": "hidden",
     "security.workspace.trust.untrustedFiles": "open",
-    // Window
-    "window.zoomLevel": 1,
     // Editor
     "editor.fontFamily": "FiraCode Nerd Font",
     "editor.minimap.enabled": true,
@@ -15,6 +13,7 @@
     "editor.codeActionsOnSave": {
         "source.organizeImports": true,
     },
+    "editor.stickyScroll.enabled": true,
     // Telemtry
     "telemetry.telemetryLevel": "off",
     // Terminal
@@ -40,7 +39,9 @@
         "dotenv",
         "jsonwebtoken",
         "noveling",
-        "struct"
+        "openapi",
+        "struct",
+        "utoipa"
     ],
     "redhat.telemetry.enabled": false,
     // Language specific settings
