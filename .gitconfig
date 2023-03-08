@@ -10,6 +10,7 @@
 	ch = checkout
 	br = branch
 	df = diff
+	pu = pull
 [commit]
 	gpgsign = true
 [pull]
