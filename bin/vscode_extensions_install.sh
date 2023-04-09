@@ -6,6 +6,7 @@ code --install-extension DavidAnson.vscode-markdownlint
 code --install-extension EditorConfig.EditorConfig
 code --install-extension Equinusocio.vsc-community-material-theme
 code --install-extension Equinusocio.vsc-material-theme
+code --install-extension GitHub.copilot
 code --install-extension Gruntfuggly.todo-tree
 code --install-extension IronGeek.vscode-env
 code --install-extension JScearcy.rust-doc-viewer
@@ -71,6 +72,7 @@ code --install-extension streetsidesoftware.code-spell-checker
 code --install-extension tamasfe.even-better-toml
 code --install-extension tauri-apps.tauri-vscode
 code --install-extension twxs.cmake
+code --install-extension waderyan.gitblame
 code --install-extension wayou.vscode-todo-highlight
 code --install-extension wingrunr21.vscode-ruby
 code --install-extension yzhang.markdown-all-in-one
