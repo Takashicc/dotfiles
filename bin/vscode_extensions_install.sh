@@ -7,6 +7,7 @@ code --install-extension EditorConfig.EditorConfig
 code --install-extension Equinusocio.vsc-community-material-theme
 code --install-extension Equinusocio.vsc-material-theme
 code --install-extension GitHub.copilot
+code --install-extension GitHub.vscode-pull-request-github
 code --install-extension Gruntfuggly.todo-tree
 code --install-extension IronGeek.vscode-env
 code --install-extension JScearcy.rust-doc-viewer
@@ -14,6 +15,7 @@ code --install-extension Shopify.ruby-lsp
 code --install-extension aaron-bond.better-comments
 code --install-extension arcanis.vscode-zipfs
 code --install-extension castwide.solargraph
+code --install-extension docsmsft.docs-yaml
 code --install-extension donjayamanne.githistory
 code --install-extension dustypomerleau.rust-syntax
 code --install-extension eamodio.gitlens
@@ -32,6 +34,7 @@ code --install-extension masakit.zenkaku-hankaku
 code --install-extension mechatroner.rainbow-csv
 code --install-extension mhutchie.git-graph
 code --install-extension mosapride.zenkaku
+code --install-extension mrmlnc.vscode-json5
 code --install-extension ms-azuretools.vscode-docker
 code --install-extension ms-dotnettools.csharp
 code --install-extension ms-python.isort
@@ -69,6 +72,7 @@ code --install-extension rust-lang.rust-analyzer
 code --install-extension shardulm94.trailing-spaces
 code --install-extension shd101wyy.markdown-preview-enhanced
 code --install-extension streetsidesoftware.code-spell-checker
+code --install-extension taichi.vscode-textlint
 code --install-extension tamasfe.even-better-toml
 code --install-extension tauri-apps.tauri-vscode
 code --install-extension twxs.cmake
