@@ -26,3 +26,11 @@ eval "$(pyenv init -)"
 
 zstyle ':completion:*' matcher-list '' 'm:{[:lower:]}={[:upper:]}' '+m:{[:upper:]}={[:lower:]}'
 autoload -U compinit && compinit
+
+alias awsp=aws_switch_profile
+function aws_switch_profile() {
+    PROFILES=$(aws configure list-profiles)
+    PROFILES_ARRAY=($(echo $PROFILES))
+    SELECTED_PROFILE=$(echo $PROFILES | peco)
+    [[ -n ${PROFILES_ARRAY[(re)${SELECTED_PROFILE}]} ]] && export AWS_PROFILE=${SELECTED_PROFILE}; echo "Switch to ${SELECTED_PROFILE} profile"
+}
