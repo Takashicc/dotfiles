@@ -1,3 +1,19 @@
+if type brew &>/dev/null
+then
+  FPATH="$(brew --prefix)/share/zsh/site-functions:${FPATH}"
+
+  zstyle ':completion:*' matcher-list '' 'm:{[:lower:]}={[:upper:]}' '+m:{[:upper:]}={[:lower:]}'
+  autoload -Uz compinit
+  compinit
+fi
+
+source /opt/homebrew/share/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh
+
+export ZPLUG_HOME=/opt/homebrew/opt/zplug
+source $ZPLUG_HOME/init.zsh
+
+source "$HOME/.rye/env"
+
 eval "$(starship init zsh)"
 eval "$(zoxide init zsh)"
 eval "$(goenv init -)"
@@ -12,14 +28,20 @@ alias python='python3'
 alias cat='bat'
 alias cls='clear'
 alias clip='pbcopy'
+alias pip='pip3'
+alias skitty="kitty +kitten ssh"
+alias rm='trash-put'
 
 export RUBY_CONFIGURE_OPTS="--with-openssl-dir=$(brew --prefix openssl@1.1)"
 export VOLTA_HOME=~/.volta
 export PYENV_ROOT=~/.pyenv
 export QT5_BIN=/opt/homebrew/opt/qt@5/bin
-export PATH=$PATH:~/go/bin:$VOLTA_HOME/bin:$PYENV_ROOT/bin:~/.rbenv/bin:$QT5_BIN
+export GOPATH=~/go
+export RUST_BIN=~/.cargo/bin
+export PATH=$PATH:~/go/bin:$VOLTA_HOME/bin:$PYENV_ROOT/bin:~/.rbenv/bin:$QT5_BIN:$GOPATH/bin:$RUST_BIN
 export GPG_TTY=$(tty)
 export BASH_SILENCE_DEPRECATION_WARNING=1
+export AWS_DEFAULT_REGION=ap-northeast-1
 
 eval "$(rbenv init -)"
 eval "$(pyenv init -)"
