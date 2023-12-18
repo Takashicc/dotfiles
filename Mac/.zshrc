@@ -16,7 +16,12 @@ source "$HOME/.rye/env"
 
 eval "$(starship init zsh)"
 eval "$(zoxide init zsh)"
+
+export GOENV_ROOT="$HOME/.goenv"
+export PATH="$GOENV_ROOT/bin:$PATH"
 eval "$(goenv init -)"
+export PATH="$GOROOT/bin:$PATH"
+export PATH="$PATH:$GOPATH/bin"
 
 alias x86='arch -x86_64 zsh'
 alias arm='arch -arm64 zsh'
@@ -36,9 +41,8 @@ export RUBY_CONFIGURE_OPTS="--with-openssl-dir=$(brew --prefix openssl@1.1)"
 export VOLTA_HOME=~/.volta
 export PYENV_ROOT=~/.pyenv
 export QT5_BIN=/opt/homebrew/opt/qt@5/bin
-export GOPATH=~/go
 export RUST_BIN=~/.cargo/bin
-export PATH=$PATH:~/go/bin:$VOLTA_HOME/bin:$PYENV_ROOT/bin:~/.rbenv/bin:$QT5_BIN:$GOPATH/bin:$RUST_BIN
+export PATH=$PATH:~/go/bin:$VOLTA_HOME/bin:$PYENV_ROOT/bin:~/.rbenv/bin:$QT5_BIN:$RUST_BIN
 export GPG_TTY=$(tty)
 export BASH_SILENCE_DEPRECATION_WARNING=1
 export AWS_DEFAULT_REGION=ap-northeast-1
