@@ -1,101 +1,98 @@
 {
-    // Workbench
-    "workbench.startupEditor": "none",
-    "workbench.colorTheme": "Community Material Theme High Contrast",
-    "workbench.iconTheme": "eq-material-theme-icons-light",
-    "workbench.editor.untitled.hint": "hidden",
-    "security.workspace.trust.untrustedFiles": "open",
-    // Editor
-    "editor.fontFamily": "FiraCode Nerd Font",
-    "editor.minimap.enabled": true,
+  // Workbench
+  "workbench.startupEditor": "none",
+  "workbench.colorTheme": "Monokai",
+  "workbench.iconTheme": "eq-material-theme-icons-light",
+  "workbench.editor.untitled.hint": "hidden",
+  // Editor
+  "editor.formatOnSave": false,
+  "editor.formatOnPaste": false,
+  "editor.formatOnType": false,
+  "editor.fontFamily": "FiraCode Nerd Font",
+  "editor.minimap.enabled": true,
+  "editor.minimap.renderCharacters": false,
+  "editor.minimap.showSlider": "always",
+  "editor.wordWrap": "on",
+  "editor.stickyScroll.enabled": true,
+  // Telemetry
+  "telemetry.telemetryLevel": "off",
+  "gitlens.telemetry.enabled": false,
+  "redhat.telemetry.enabled": false,
+  // Terminal
+  "terminal.integrated.fontFamily": "FiraCode Nerd Font",
+  "terminal.integrated.fontSize": 15,
+  "terminal.integrated.enableMultiLinePasteWarning": "auto",
+  // Files
+  "files.insertFinalNewline": true,
+  "files.exclude": {
+    "**/.git": true,
+    "**/.svn": true,
+    "**/.hg": true,
+    "**/CVS": true,
+    "**/.DS_Store": true,
+    "**/Thumbs.db": true
+  },
+  // Language specific settings
+  // YAML
+  "yaml.format.enable": true,
+  "[yaml]": {
+    "editor.defaultFormatter": "redhat.vscode-yaml",
     "editor.formatOnSave": true,
-    "editor.wordWrap": "on",
-    "editor.codeActionsOnSave": {
-        "source.organizeImports": true,
+    "editor.tabSize": 2
+  },
+  // TOML
+  "[toml]": {
+    "editor.defaultFormatter": "tamasfe.even-better-toml",
+    "editor.formatOnSave": true
+  },
+  // JSON
+  "[json][jsonc]": {
+    "editor.defaultFormatter": "esbenp.prettier-vscode",
+    "editor.formatOnSave": true
+  },
+  // MARKDOWN
+  "[markdown]": {
+    "editor.defaultFormatter": "DavidAnson.vscode-markdownlint",
+    "editor.formatOnSave": true
+  },
+  "markdownlint.run": "onSave",
+  "markdownlint.config": {
+    "MD014": false
+  },
+  // RUST
+  "[rust]": {
+    "editor.defaultFormatter": "rust-lang.rust-analyzer",
+    "editor.formatOnSave": true
+  },
+  // Extension specific settings
+  // todo-tree
+  "todo-tree.general.tags": ["TODO", "NOTE", "WARN", "FIXME"],
+  "todo-tree.highlights.defaultHighlight": {
+    "foreground": "#000000",
+    "gutterIcon": true
+  },
+  "todo-tree.highlights.customHighlight": {
+    "TODO": {
+      "icon": "check-circle",
+      "iconColour": "#00FF00",
+      "background": "#00FF00"
     },
-    "editor.stickyScroll.enabled": true,
-    // Telemtry
-    "telemetry.telemetryLevel": "off",
-    // Terminal
-    "terminal.integrated.fontFamily": "FiraCode Nerd Font",
-    "terminal.integrated.fontSize": 15,
-    "terminal.integrated.enableMultiLinePasteWarning": false,
-    // Files
-    "files.exclude": {
-        "**/.git": true,
-        "**/.svn": true,
-        "**/.hg": true,
-        "**/CVS": true,
-        "**/.DS_Store": true,
-        "**/Thumbs.db": true
+    "NOTE": {
+      "icon": "thumbsup",
+      "iconColour": "#1E90FF",
+      "background": "#1E90FF"
     },
-    // Extension specific settings
-    "indentRainbow.indicatorStyle": "light",
-    "cSpell.enableFiletypes": [
-        "makefile"
-    ],
-    "cSpell.userWords": [
-        "actix",
-        "dotenv",
-        "jsonwebtoken",
-        "noveling",
-        "openapi",
-        "struct",
-        "utoipa"
-    ],
-    "redhat.telemetry.enabled": false,
-    // Language specific settings
-    "[markdown]": {
-        "editor.defaultFormatter": "DavidAnson.vscode-markdownlint"
+    "WARN": {
+      "icon": "alert",
+      "iconColor": "#f11e1e",
+      "background": "#f11e1e"
     },
-    "[json]": {
-        "editor.defaultFormatter": "vscode.json-language-features"
-    },
-    "[jsonc]": {
-        "editor.defaultFormatter": "vscode.json-language-features"
-    },
-    "[python]": {
-        "editor.defaultFormatter": "ms-python.python"
-    },
-    "[javascript]": {
-        "editor.defaultFormatter": "rome.rome"
-    },
-    "[typescript]": {
-        "editor.defaultFormatter": "rome.rome"
-    },
-    "[javascriptreact]": {
-        "editor.defaultFormatter": "rome.rome"
-    },
-    "[typescriptreact]": {
-        "editor.defaultFormatter": "rome.rome"
-    },
-    "[yaml]": {
-        "editor.defaultFormatter": "redhat.vscode-yaml"
-    },
-    "python.linting.lintOnSave": true,
-    "python.linting.pylintEnabled": false,
-    "python.linting.flake8Enabled": true,
-    "python.linting.flake8Args": [
-        "--ignore=E501",
-        "--max-complexity=20"
-    ],
-    "python.formatting.provider": "autopep8",
-    "python.formatting.autopep8Args": [
-        "--aggressive",
-        "--aggressive"
-    ],
-    "ruby.useBundler": true,
-    "ruby.useLanguageServer": true,
-    "ruby.lint": {
-        "rubocop": {
-            "useBundler": true,
-            "except": [
-                "Metrics"
-            ]
-        }
-    },
-    "go.toolsManagement.autoUpdate": true,
-    "markdownlint.config": {
-        "MD014": false
+    "FIXME": {
+      "icon": "flame",
+      "iconColor": "#FFD700",
+      "background": "#FFD700"
     }
+  },
+  // CSpell
+  "cSpell.ignorePaths": []
 }
