@@ -34,12 +34,46 @@
   },
   // Language specific settings
   // YAML
-  "yaml.format.enable": true,
   "[yaml]": {
     "editor.defaultFormatter": "redhat.vscode-yaml",
     "editor.formatOnSave": true,
     "editor.tabSize": 2
   },
+  "yaml.format.enable": true,
+  "yaml.customTags": [
+    "!And",
+    "!And sequence",
+    "!If",
+    "!If sequence",
+    "!Not",
+    "!Not sequence",
+    "!Equals",
+    "!Equals sequence",
+    "!Or",
+    "!Or sequence",
+    "!FindInMap",
+    "!FindInMap sequence",
+    "!Base64",
+    "!Join",
+    "!Join sequence",
+    "!Cidr",
+    "!Ref",
+    "!Sub",
+    "!Sub sequence",
+    "!GetAtt",
+    "!GetAZs",
+    "!ImportValue",
+    "!ImportValue sequence",
+    "!Select",
+    "!Select sequence",
+    "!Split",
+    "!Split sequence",
+    "!anystr",
+    "!anyint",
+    "!int",
+    "!str",
+    "!anybool"
+  ],
   // TOML
   "[toml]": {
     "editor.defaultFormatter": "tamasfe.even-better-toml",
@@ -64,6 +98,8 @@
     "editor.defaultFormatter": "rust-lang.rust-analyzer",
     "editor.formatOnSave": true
   },
+  // GO
+  "go.goroot": "${userHome}/.goenv/versions/1.22.0",
   // Extension specific settings
   // todo-tree
   "todo-tree.general.tags": ["TODO", "NOTE", "WARN", "FIXME"],
@@ -94,5 +130,6 @@
     }
   },
   // CSpell
-  "cSpell.ignorePaths": []
+  "cSpell.ignorePaths": [],
+  "cSpell.ignoreWords": ["anystr", "anyint", "anybool"]
 }
