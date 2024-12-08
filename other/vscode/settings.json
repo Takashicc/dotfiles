@@ -1,7 +1,7 @@
 {
   // Workbench
   "workbench.startupEditor": "none",
-  "workbench.colorTheme": "Monokai",
+  "workbench.colorTheme": "Material Theme High Contrast",
   "workbench.iconTheme": "eq-material-theme-icons-light",
   "workbench.editor.untitled.hint": "hidden",
   // Editor
@@ -22,6 +22,8 @@
   "terminal.integrated.fontFamily": "FiraCode Nerd Font",
   "terminal.integrated.fontSize": 15,
   "terminal.integrated.enableMultiLinePasteWarning": "auto",
+  // Security
+  "security.workspace.trust.untrustedFiles": "newWindow",
   // Files
   "files.insertFinalNewline": true,
   "files.exclude": {
@@ -33,6 +35,11 @@
     "**/Thumbs.db": true
   },
   // Language specific settings
+  // GitHub Actions
+  "[github-actions-workflow]": {
+    "editor.defaultFormatter": "esbenp.prettier-vscode",
+    "editor.formatOnSave": true
+  },
   // YAML
   "[yaml]": {
     "editor.defaultFormatter": "redhat.vscode-yaml",
@@ -74,6 +81,16 @@
     "!str",
     "!anybool"
   ],
+  // HTML
+  "[html]": {
+    "editor.defaultFormatter": "esbenp.prettier-vscode",
+    "editor.formatOnSave": true
+  },
+  // XML
+  "[xml]": {
+    "editor.formatOnSave": true
+  },
+  "xml.format.enabled": true,
   // TOML
   "[toml]": {
     "editor.defaultFormatter": "tamasfe.even-better-toml",
@@ -100,6 +117,17 @@
   },
   // GO
   "go.goroot": "${userHome}/.goenv/versions/1.22.0",
+  "go.toolsManagement.autoUpdate": true,
+  // C#
+  "[csharp]": {
+    "editor.formatOnSave": true,
+    "editor.defaultFormatter": "ms-dotnettools.csharp"
+  },
+  // JavaScript
+  "[javascript]": {
+    "editor.formatOnSave": true,
+    "editor.defaultFormatter": "biomejs.biome"
+  },
   // Extension specific settings
   // todo-tree
   "todo-tree.general.tags": ["TODO", "NOTE", "WARN", "FIXME"],
