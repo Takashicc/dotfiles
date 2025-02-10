@@ -3,7 +3,6 @@
 [user]
 	name = Takashicc
 	email = 105186894+Takashicc@users.noreply.github.com
-	signingkey = XXXXXX # Copy the key from gpg
 [alias]
 	st = status
 	ps = push
@@ -16,8 +15,6 @@
 	pu = pull
 	l = log
 	gl = log --graph --oneline --decorate=full -20 --date=short --format=\"%C(yellow)%h%C(reset) %C(magenta)[%ad]%C(reset)%C(auto)%d%C(reset) %s %C(cyan)@%an%C(reset)\"
-[commit]
-	gpgsign = true
 [pull]
 	ff = only
 [core]
@@ -27,3 +24,5 @@
 	process = git-lfs filter-process
 	required = true
 	clean = git-lfs clean -- %f
+[ghq]
+	root = ~/Desktop/ghq
