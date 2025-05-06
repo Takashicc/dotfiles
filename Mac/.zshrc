@@ -35,28 +35,34 @@ alias cls='clear'
 alias clip='pbcopy'
 alias pip='pip3'
 alias skitty="kitty +kitten ssh"
+alias code='cursor'
 alias rm='trash-put'
 
 export RUBY_CONFIGURE_OPTS="--with-openssl-dir=$(brew --prefix openssl@1.1)"
 export VOLTA_HOME=~/.volta
-export PYENV_ROOT=~/.pyenv
 export QT5_BIN=/opt/homebrew/opt/qt@5/bin
 export RUST_BIN=~/.cargo/bin
-export PATH=$PATH:~/go/bin:$VOLTA_HOME/bin:$PYENV_ROOT/bin:~/.rbenv/bin:$QT5_BIN:$RUST_BIN
+export PATH=$PATH:~/go/bin:$VOLTA_HOME/bin:/bin:~/.rbenv/bin:$QT5_BIN:$RUST_BIN:~/local/bin
 export GPG_TTY=$(tty)
 export BASH_SILENCE_DEPRECATION_WARNING=1
 export AWS_DEFAULT_REGION=ap-northeast-1
 
 eval "$(rbenv init -)"
-eval "$(pyenv init -)"
+eval "$(fzf --zsh)"
 
 zstyle ':completion:*' matcher-list '' 'm:{[:lower:]}={[:upper:]}' '+m:{[:upper:]}={[:lower:]}'
 autoload -U compinit && compinit
 
 alias awsp=aws_switch_profile
 function aws_switch_profile() {
-    PROFILES=$(aws configure list-profiles)
-    PROFILES_ARRAY=($(echo $PROFILES))
-    SELECTED_PROFILE=$(echo $PROFILES | peco)
-    [[ -n ${PROFILES_ARRAY[(re)${SELECTED_PROFILE}]} ]] && export AWS_PROFILE=${SELECTED_PROFILE}; echo "Switch to ${SELECTED_PROFILE} profile"
+    export AWS_PROFILE=$(aws configure list-profiles | fzf)
 }
+
+function repo() {
+  local repo_dir
+  repo_dir=$(ghq list | fzf --preview "bat --color=always --style=header,grid --line-range :80 $(ghq root)/{}/README.*")
+  if [[ -n "$repo_dir" ]]; then
+    cd "$(ghq root)/$repo_dir" || return
+  fi
+}
+alias repo=repo

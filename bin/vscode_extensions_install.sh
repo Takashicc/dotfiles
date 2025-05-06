@@ -1,24 +1,27 @@
 #!/usr/bin/env bash
 
 code --install-extension 766b.go-outliner
-code --install-extension aaravb.chrome-extension-developer-tools
 code --install-extension adpyke.vscode-sql-formatter
 code --install-extension alexcvzz.vscode-sqlite
-code --install-extension biomejs.biome
+code --install-extension anysphere.pyright
+code --install-extension be5invis.vscode-custom-css
+code --install-extension brandonkirbyson.vscode-animations
 code --install-extension brody715.vscode-cuelang
+code --install-extension cocopon.iceberg-theme
 code --install-extension davidanson.vscode-markdownlint
+code --install-extension denoland.vscode-deno
 code --install-extension donjayamanne.githistory
+code --install-extension drcika.apc-extension
 code --install-extension dustypomerleau.rust-syntax
+code --install-extension dwtexe.cursor-stats
 code --install-extension eamodio.gitlens
 code --install-extension editorconfig.editorconfig
+code --install-extension enhancedjax.vscode-ayu-zed
 code --install-extension equinusocio.vsc-material-theme
 code --install-extension equinusocio.vsc-material-theme-icons
 code --install-extension esbenp.prettier-vscode
-code --install-extension formulahendry.auto-close-tag
 code --install-extension formulahendry.auto-rename-tag
 code --install-extension foxundermoon.shell-format
-code --install-extension github.copilot
-code --install-extension github.copilot-chat
 code --install-extension github.vscode-github-actions
 code --install-extension github.vscode-pull-request-github
 code --install-extension golang.go
@@ -44,11 +47,6 @@ code --install-extension ms-python.debugpy
 code --install-extension ms-python.python
 code --install-extension ms-python.vscode-pylance
 code --install-extension ms-vscode-remote.remote-containers
-code --install-extension ms-vscode-remote.remote-wsl
-code --install-extension ms-vscode.cmake-tools
-code --install-extension ms-vscode.cpptools
-code --install-extension ms-vscode.cpptools-extension-pack
-code --install-extension ms-vscode.cpptools-themes
 code --install-extension ms-vsliveshare.vsliveshare
 code --install-extension msyrus.go-doc
 code --install-extension mtxr.sqltools
@@ -62,8 +60,10 @@ code --install-extension qwtel.sqlite-viewer
 code --install-extension redhat.vscode-xml
 code --install-extension redhat.vscode-yaml
 code --install-extension ritwickdey.liveserver
-code --install-extension rpinski.shebang-snippets
 code --install-extension rust-lang.rust-analyzer
+code --install-extension samplavigne.p5-vscode
+code --install-extension saoudrizwan.claude-dev
+code --install-extension shalldie.background
 code --install-extension shardulm94.trailing-spaces
 code --install-extension shd101wyy.markdown-preview-enhanced
 code --install-extension shuworks.vscode-table-formatter
@@ -73,7 +73,6 @@ code --install-extension tamasfe.even-better-toml
 code --install-extension task.vscode-task
 code --install-extension tauri-apps.tauri-vscode
 code --install-extension tobiah.language-pde
-code --install-extension twxs.cmake
 code --install-extension vincaslt.highlight-matching-tag
 code --install-extension waderyan.gitblame
 code --install-extension wix.vscode-import-cost

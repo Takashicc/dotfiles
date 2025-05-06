@@ -13,6 +13,14 @@ Copy common settings.
   ./bin/common.sh
   ```
 
+### Brewfile
+
+- List all dependencies
+
+  ```sh
+  brew bundle dump --file=- | clip
+  ```
+
 ### VSCode
 
 #### VSCode extensions
@@ -20,7 +28,7 @@ Copy common settings.
 - List all extensions
 
   ```sh
-  code --list-extensions | sort | awk '{print "code --install-extension " $0}'
+  code --list-extensions | sort | awk '{print "code --install-extension " $0}' | clip
   ```
 
 - Install extensions
@@ -46,8 +54,6 @@ Copy common settings.
   - Node engine manager
 - [rbenv](https://github.com/rbenv/rbenv)
   - Ruby version manager
-- [pyenv](https://github.com/pyenv/pyenv)
-  - Python version manager
 - [poetry](https://python-poetry.org)
   - Python package and dependency manager
 - [goenv](https://github.com/syndbg/goenv)
