@@ -1,5 +1,18 @@
+[branch]
+	sort = -committerdate
+[tag]
+	sort = version:refname
 [init]
 	defaultBranch = main
+[diff]
+	algorithm = histogram
+	colorMoved = plain
+	mnemonicPrefix = true
+	renames = true
+[push]
+	default = simple
+	autoSetupRemote = true
+	followTags = true
 [user]
 	name = Takashicc
 	email = 105186894+Takashicc@users.noreply.github.com
@@ -21,7 +34,7 @@
 	ff = only
 [core]
 	longpaths = true
-	untrackedcache = truec
+	untrackedcache = true
 [filter "lfs"]
 	smudge = git-lfs smudge -- %f
 	process = git-lfs filter-process
