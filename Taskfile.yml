@@ -1,0 +1,51 @@
+version: 3
+
+tasks:
+  default:
+    cmd: task list --sort none
+
+  internal-chezmoi:
+    internal: true
+    requires:
+      vars:
+        - ARGS
+    cmd: chezmoi {{.ARGS}}
+
+  add:
+    desc: Register a new file to manage with chezmoi
+    requires:
+      vars:
+        - file
+    cmd:
+      task: internal-chezmoi
+      vars:
+        ARGS: add {{.file}} {{.CLI_ARGS}}
+
+  apply:
+    desc: Apply changes
+    cmd:
+      task: internal-chezmoi
+      vars:
+        ARGS: apply {{.CLI_ARGS}}
+
+  diff:
+    desc: Show changes
+    cmd:
+      task: internal-chezmoi
+      vars:
+        ARGS: diff {{.CLI_ARGS}}
+
+  status:
+    desc: Show status
+    cmd:
+      task: internal-chezmoi
+      vars:
+        ARGS: status {{.CLI_ARGS}}
+
+  brewfile-update:
+    desc: Update brewfile
+    cmd: brew bundle dump -f
+
+  brewfile-install:
+    desc: Install brew packages from brewfile
+    cmd: brew bundle

@@ -1,0 +1,88 @@
+# --- Completion ---
+if type brew &>/dev/null
+then
+  FPATH="$(brew --prefix)/share/zsh/site-functions:${FPATH}"
+fi
+
+if [[ -d ~/.stripe ]]
+then
+  fpath=(~/.stripe $fpath)
+fi
+
+# Initialize completion system
+autoload -Uz compinit
+compinit
+
+# Completion settings
+zstyle ':completion:*' completer _complete _match _approximate
+zstyle ':completion:*' matcher-list '' 'm:{[:lower:]}={[:upper:]}' '+m:{[:upper:]}={[:lower:]}'
+zstyle ':completion:*' menu select
+zstyle ':completion:*' group-name ''
+zstyle ':completion:*' verbose yes
+zstyle ':completion:*:descriptions' format '%B%d%b'
+zstyle ':completion:*:messages' format '%d'
+zstyle ':completion:*:warnings' format 'No matches for: %d'
+zstyle ':completion:*:corrections' format '%B%d (errors: %e)%b'
+
+# File completion
+zstyle ':completion:*' file-sort modification
+zstyle ':completion:*' squeeze-slashes true
+
+# Directory completion
+zstyle ':completion:*:cd:*' ignore-parents parent pwd
+zstyle ':completion:*:*:cd:*:directory-stack' menu yes select
+
+# Process completion
+zstyle ':completion:*:*:kill:*' menu yes select
+zstyle ':completion:*:kill:*' force-list always
+
+# --- Plugin & Tool Initialization ---
+source /opt/homebrew/share/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh
+eval "$(starship init zsh)"
+eval "$(zoxide init zsh)"
+eval "$(fzf --zsh)"
+eval "$(goenv init -)"
+
+# --- Environment Variables ---
+export GIT_EXTERNAL_DIFF=difft
+export VOLTA_HOME=~/.volta
+export GPG_TTY=$(tty)
+export AWS_DEFAULT_REGION=ap-northeast-1
+
+
+# --- PATH Configuration ---
+
+
+
+# --- Aliases ---
+alias x86='arch -x86_64 zsh'
+alias arm='arch -arm64 zsh'
+alias ls='lsd'
+alias l='lsd -l'
+alias la='lsd -al'
+alias cd='z'
+alias python='python3'
+alias cat='bat'
+alias cls='clear'
+alias clip='pbcopy'
+alias pip='pip3'
+alias skitty="kitty +kitten ssh"
+alias code='cursor'
+alias rm='trash-put'
+
+# --- Functions ---
+# AWS profile switcher
+function aws_switch_profile() {
+    export AWS_PROFILE=$(aws configure list-profiles | fzf)
+}
+alias awsp=aws_switch_profile
+
+# Repository switcher
+function repo() {
+  local repo_dir
+  repo_dir=$(ghq list | fzf --preview "bat --color=always --style=header,grid --line-range :80 $(ghq root)/{}/README.*")
+  if [[ -n "$repo_dir" ]]; then
+    cd "$(ghq root)/$repo_dir" || return
+  fi
+}
+alias repo=repo

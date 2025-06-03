@@ -16,6 +16,7 @@
 [user]
 	name = Takashicc
 	email = 105186894+Takashicc@users.noreply.github.com
+	signingkey = 0932CDB3733C999C
 [alias]
 	st = status
 	ps = push
@@ -26,7 +27,6 @@
 	brd = !git branch | fzf -m | xargs -I {} git branch -d '{}'
 	df = diff
 	pu = pull
-	l = log
 	gl = log --graph --oneline --decorate=full -20 --date=short --format=\"%C(yellow)%h%C(reset) %C(magenta)[%ad]%C(reset)%C(auto)%d%C(reset) %s %C(cyan)@%an%C(reset)\"
 	show-stale = "!git fetch --prune && git branch -vv | grep ': gone]' | awk '{print $1}'"
 	cleanup-stale = "!git fetch --prune && git branch -vv | grep ': gone]' | awk '{print $1}' | xargs git branch -d"
@@ -35,11 +35,14 @@
 [core]
 	longpaths = true
 	untrackedcache = true
+	excludesfile = /Users/tak/.gitignore_global
 [filter "lfs"]
 	smudge = git-lfs smudge -- %f
 	process = git-lfs filter-process
 	required = true
 	clean = git-lfs clean -- %f
+[commit]
+	gpgsign = true
 [ghq]
 	vcs = git
 	root = ~/Desktop/ghq
