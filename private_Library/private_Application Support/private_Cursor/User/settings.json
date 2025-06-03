@@ -1,10 +1,14 @@
 {
-  // Workbench
-  "workbench.startupEditor": "none",
-  "workbench.colorTheme": "Material Theme High Contrast",
+  "background.fullscreen": {
+    "images": ["file:///Users/tak/Downloads/pics/72525842_p0.jpg"],
+    "opacity": 0.1,
+    "size": "cover",
+    "position": "center",
+    "interval": 0,
+    "random": false
+  },
+  "workbench.colorTheme": "Ayu Mirage Zed",
   "workbench.iconTheme": "eq-material-theme-icons-light",
-  "workbench.editor.untitled.hint": "hidden",
-  // Editor
   "editor.formatOnSave": false,
   "editor.formatOnPaste": false,
   "editor.formatOnType": false,
@@ -14,17 +18,11 @@
   "editor.minimap.showSlider": "always",
   "editor.wordWrap": "on",
   "editor.stickyScroll.enabled": true,
-  // Telemetry
-  "telemetry.telemetryLevel": "off",
   "gitlens.telemetry.enabled": false,
   "redhat.telemetry.enabled": false,
-  // Terminal
   "terminal.integrated.fontFamily": "FiraCode Nerd Font",
   "terminal.integrated.fontSize": 15,
   "terminal.integrated.enableMultiLinePasteWarning": "auto",
-  // Security
-  "security.workspace.trust.untrustedFiles": "newWindow",
-  // Files
   "files.insertFinalNewline": true,
   "files.exclude": {
     "**/.git": true,
@@ -34,17 +32,26 @@
     "**/.DS_Store": true,
     "**/Thumbs.db": true
   },
-  // Language specific settings
-  // GitHub Actions
   "[github-actions-workflow]": {
     "editor.defaultFormatter": "esbenp.prettier-vscode",
     "editor.formatOnSave": true
   },
-  // YAML
   "[yaml]": {
     "editor.defaultFormatter": "redhat.vscode-yaml",
     "editor.formatOnSave": true,
+    "editor.autoIndent": "advanced",
     "editor.tabSize": 2
+  },
+  "[dockercompose]": {
+    "editor.defaultFormatter": "esbenp.prettier-vscode",
+    "editor.formatOnSave": true,
+    "editor.autoIndent": "advanced",
+    "editor.tabSize": 2,
+    "editor.quickSuggestions": {
+      "other": "on",
+      "comments": "off",
+      "strings": "on"
+    }
   },
   "yaml.format.enable": true,
   "yaml.customTags": [
@@ -81,27 +88,22 @@
     "!str",
     "!anybool"
   ],
-  // HTML
   "[html]": {
-    "editor.defaultFormatter": "esbenp.prettier-vscode",
+    "editor.defaultFormatter": "vscode.html-language-features",
     "editor.formatOnSave": true
   },
-  // XML
   "[xml]": {
     "editor.formatOnSave": true
   },
   "xml.format.enabled": true,
-  // TOML
   "[toml]": {
     "editor.defaultFormatter": "tamasfe.even-better-toml",
     "editor.formatOnSave": true
   },
-  // JSON
   "[json][jsonc]": {
     "editor.defaultFormatter": "esbenp.prettier-vscode",
     "editor.formatOnSave": true
   },
-  // MARKDOWN
   "[markdown]": {
     "editor.defaultFormatter": "DavidAnson.vscode-markdownlint",
     "editor.formatOnSave": true
@@ -110,26 +112,34 @@
   "markdownlint.config": {
     "MD014": false
   },
-  // RUST
   "[rust]": {
     "editor.defaultFormatter": "rust-lang.rust-analyzer",
     "editor.formatOnSave": true
   },
-  // GO
-  "go.goroot": "${userHome}/.goenv/versions/1.22.0",
-  "go.toolsManagement.autoUpdate": true,
-  // C#
+  "go.goroot": "~/.goenv/versions/1.24.0",
   "[csharp]": {
     "editor.formatOnSave": true,
     "editor.defaultFormatter": "ms-dotnettools.csharp"
   },
-  // JavaScript
   "[javascript]": {
     "editor.formatOnSave": true,
     "editor.defaultFormatter": "biomejs.biome"
   },
-  // Extension specific settings
-  // todo-tree
+  "[typescript]": {
+    "editor.formatOnSave": true,
+    "editor.defaultFormatter": "esbenp.prettier-vscode"
+  },
+  "[typescriptreact]": {
+    "editor.formatOnSave": true,
+    "editor.defaultFormatter": "esbenp.prettier-vscode"
+  },
+  "[sql]": {
+    "editor.defaultFormatter": "adpyke.vscode-sql-formatter"
+  },
+  "[prisma]": {
+    "editor.defaultFormatter": "Prisma.prisma",
+    "editor.formatOnSave": true
+  },
   "todo-tree.general.tags": ["TODO", "NOTE", "WARN", "FIXME"],
   "todo-tree.highlights.defaultHighlight": {
     "foreground": "#000000",
@@ -157,7 +167,41 @@
       "background": "#FFD700"
     }
   },
-  // CSpell
   "cSpell.ignorePaths": [],
-  "cSpell.ignoreWords": ["anystr", "anyint", "anybool"]
+  "cSpell.ignoreWords": ["anystr", "anyint", "anybool"],
+  "githubPullRequests.pullBranch": "never",
+  "security.workspace.trust.untrustedFiles": "newWindow",
+  "diffEditor.ignoreTrimWhitespace": true,
+  "liveServer.settings.donotShowInfoMsg": true,
+  "go.toolsManagement.autoUpdate": true,
+  "editor.inlineSuggest.suppressSuggestions": true,
+  "files.associations": {
+    "*.tmpl": "html"
+  },
+  "cSpell.userWords": ["Iden", "tagpr", "Taskfile"],
+  "cursor.cpp.disabledLanguages": ["plaintext", "markdown", "scminput"],
+  "animations.Install-Method": "Custom CSS and JS",
+  "animations.Enabled": true,
+  "animations.CursorAnimation": true,
+  "apc.imports": [],
+  "vscode_custom_css.imports": [
+    "file:///Users/tak/.cursor/extensions/brandonkirbyson.vscode-animations-2.0.7/dist/updateHandler.js"
+  ],
+  "git.autofetch": true,
+  "explorer.fileNesting.patterns": {
+    "*.ts": "${capture}.js",
+    "*.js": "${capture}.js.map, ${capture}.min.js, ${capture}.d.ts",
+    "*.jsx": "${capture}.js",
+    "*.tsx": "${capture}.ts",
+    "tsconfig.json": "tsconfig.*.json",
+    "package.json": "package-lock.json, yarn.lock, pnpm-lock.yaml, bun.lockb",
+    "Cargo.toml": "Cargo.lock",
+    "*.sqlite": "${capture}.${extname}-*",
+    "*.db": "${capture}.${extname}-*",
+    "*.sqlite3": "${capture}.${extname}-*",
+    "*.db3": "${capture}.${extname}-*",
+    "*.sdb": "${capture}.${extname}-*",
+    "*.s3db": "${capture}.${extname}-*"
+  },
+  "git.confirmSync": false
 }
