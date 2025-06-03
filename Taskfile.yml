@@ -2,7 +2,7 @@ version: 3
 
 tasks:
   default:
-    cmd: task list --sort none
+    cmd: task -l --sort none
 
   internal-chezmoi:
     internal: true
