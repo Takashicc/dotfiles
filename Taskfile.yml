@@ -44,8 +44,8 @@ tasks:
 
   brewfile-update:
     desc: Update brewfile
-    cmd: brew bundle dump -f
+    cmd: brew bundle dump --global -f
 
   brewfile-install:
     desc: Install brew packages from brewfile
-    cmd: brew bundle
+    cmd: brew bundle --global
