@@ -72,6 +72,7 @@ alias skitty="kitty +kitten ssh"
 alias code='cursor'
 alias rm='trash-put'
 alias docker-tidy='docker builder prune; docker image prune; docker system prune -a --filter "until=24h"'
+alias vim='nvim'
 
 # --- Functions ---
 # AWS profile switcher
