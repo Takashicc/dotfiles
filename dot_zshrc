@@ -49,10 +49,12 @@ export VOLTA_HOME=~/.volta
 export GPG_TTY=$(tty)
 export AWS_DEFAULT_REGION=ap-northeast-1
 
-
 # --- PATH Configuration ---
-
-
+# Get golang version from goenv and add bin to PATH
+go_version=$(cat ~/.goenv/version)
+if [[ -n "$go_version" ]]; then
+  export PATH=$PATH:~/go/$go_version/bin
+fi
 
 # --- Aliases ---
 alias x86='arch -x86_64 zsh'
