@@ -9,7 +9,7 @@ tasks:
     requires:
       vars:
         - ARGS
-    cmd: chezmoi {{.ARGS}}
+    cmd: chezmoi -S . {{.ARGS}}
 
   add:
     desc: Register a new file to manage with chezmoi
