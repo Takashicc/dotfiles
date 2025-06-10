@@ -1,5 +1,10 @@
-old/*
-scripts/*
-env_setup.md
 README.md
 Taskfile.yml
+
+{{ if ne .chezmoi.os "darwin" }}
+dot_config/borders
+dot_config/sketchybar
+private_dot_gnupg
+private_Library
+dot_Brewfile
+{{ end -}}
