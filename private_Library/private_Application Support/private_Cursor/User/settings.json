@@ -116,7 +116,6 @@
     "editor.defaultFormatter": "rust-lang.rust-analyzer",
     "editor.formatOnSave": true
   },
-  "go.goroot": "~/.goenv/versions/1.24.0",
   "[csharp]": {
     "editor.formatOnSave": true,
     "editor.defaultFormatter": "ms-dotnettools.csharp"
