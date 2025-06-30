@@ -24,5 +24,3 @@ hadolint = "latest"
 task = "latest"
 ripgrep = "latest"
 terraform = "latest"
-
-[tasks]
