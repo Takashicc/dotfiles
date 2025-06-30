@@ -140,6 +140,12 @@
     "editor.defaultFormatter": "Prisma.prisma",
     "editor.formatOnSave": true
   },
+  "[swift]": {
+    "editor.defaultFormatter": "sweetpad.sweetpad",
+    "editor.formatOnSave": true
+  },
+  "lldb.library": "/Applications/Xcode.app/Contents/SharedFrameworks/LLDB.framework/Versions/A/LLDB",
+  "lldb.launch.expressions": "native",
   "todo-tree.general.tags": ["TODO", "NOTE", "WARN", "FIXME"],
   "todo-tree.highlights.defaultHighlight": {
     "foreground": "#000000",
@@ -188,6 +194,7 @@
     "file:///Users/tak/.cursor/extensions/brandonkirbyson.vscode-animations-2.0.7/dist/updateHandler.js"
   ],
   "git.autofetch": true,
+  "git.confirmSync": false,
   "explorer.fileNesting.patterns": {
     "*.ts": "${capture}.js",
     "*.js": "${capture}.js.map, ${capture}.min.js, ${capture}.d.ts",
@@ -202,6 +209,5 @@
     "*.db3": "${capture}.${extname}-*",
     "*.sdb": "${capture}.${extname}-*",
     "*.s3db": "${capture}.${extname}-*"
-  },
-  "git.confirmSync": false
+  }
 }
