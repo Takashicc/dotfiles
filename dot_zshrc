@@ -42,6 +42,7 @@ eval "$(mise activate zsh)"
 eval "$(starship init zsh)"
 eval "$(zoxide init zsh)"
 eval "$(fzf --zsh)"
+eval "$(task --completion zsh)"
 
 # --- Environment Variables ---
 export GIT_EXTERNAL_DIFF=difft
