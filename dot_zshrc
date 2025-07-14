@@ -70,6 +70,8 @@ alias code='cursor'
 alias rm='trash-put'
 alias docker-tidy='docker builder prune; docker image prune; docker system prune -a --filter "until=24h"'
 alias vim='nvim'
+alias date='/opt/homebrew/bin/gdate'
+alias paste='/opt/homebrew/bin/gpaste'
 
 # --- Functions ---
 # AWS profile switcher
@@ -87,3 +89,10 @@ function repo() {
   fi
 }
 alias repo=repo
+
+# Download video
+function download_video() {
+  read "URL? " url
+  yt-dlp --embed-thumbnail --embed-subs --embed-metadata -f "bv*+ba/best" --merge-output-format mkv "$url"
+}
+alias dv=download_video
