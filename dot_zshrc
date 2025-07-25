@@ -89,10 +89,3 @@ function repo() {
   fi
 }
 alias repo=repo
-
-# Download video
-function download_video() {
-  read "URL? " url
-  yt-dlp --embed-thumbnail --embed-subs --embed-metadata -f "bv*+ba/best" --merge-output-format mkv "$url"
-}
-alias dv=download_video

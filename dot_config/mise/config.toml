@@ -25,3 +25,10 @@ task = "latest"
 ripgrep = "latest"
 terraform = "latest"
 ffmpeg = "latest"
+
+[tasks.download-video]
+description = "Download video from URL"
+run = """
+read -p "URL?: " URL
+yt-dlp --embed-thumbnail --embed-subs --embed-metadata -f "bv*+ba/best" --merge-output-format mkv "$URL"
+"""
