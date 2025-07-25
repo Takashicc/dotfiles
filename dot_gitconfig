@@ -28,8 +28,8 @@
 	df = diff
 	pu = pull
 	gl = log --graph --oneline --decorate=full -20 --date=short --format=\"%C(yellow)%h%C(reset) %C(magenta)[%ad]%C(reset)%C(auto)%d%C(reset) %s %C(cyan)@%an%C(reset)\"
-	show-stale = "!git fetch --prune && git branch -vv | grep ': gone]' | awk '{print $1}'"
-	cleanup-stale = "!git fetch --prune && git branch -vv | grep ': gone]' | awk '{print $1}' | xargs git branch -d"
+	show-stale = "!git fetch --prune && git branch -vv | grep ': gone]' | awk '{print $1}' | sort"
+	cleanup-stale = "!git fetch --prune && git branch -vv | grep ': gone]' | awk '{print $1}' | sort | xargs git branch -d"
 [pull]
 	ff = only
 [core]
