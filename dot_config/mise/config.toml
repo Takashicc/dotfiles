@@ -25,6 +25,9 @@ task = "latest"
 ripgrep = "latest"
 terraform = "latest"
 ffmpeg = "latest"
+k6 = "latest"
+uv = "latest"
+bun = "latest"
 
 [tasks.download-video]
 description = "Download video from URL"
