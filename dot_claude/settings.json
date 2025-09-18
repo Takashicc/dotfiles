@@ -3,8 +3,6 @@
     "allow": [],
     "deny": [
       "Bash(sudo:*)",
-      "Bash(rm:*)",
-      "Bash(rm -rf:*)",
       "Bash(git push:*)",
       "Bash(git commit:*)",
       "Bash(git reset:*)",
@@ -26,6 +24,7 @@
     ]
   },
   "env": {
-    "DISABLE_TELEMETRY": "1"
+    "DISABLE_TELEMETRY": "1",
+    "DISABLE_ZOXIDE": "1"
   }
 }

@@ -40,7 +40,9 @@ zstyle ':completion:*:kill:*' force-list always
 source /opt/homebrew/share/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh
 eval "$(mise activate zsh)"
 eval "$(starship init zsh)"
-eval "$(zoxide init zsh)"
+if [ -z "$DISABLE_ZOXIDE" ]; then
+    eval "$(zoxide init zsh)"
+fi
 eval "$(fzf --zsh)"
 eval "$(task --completion zsh)"
 
@@ -59,7 +61,9 @@ alias arm='arch -arm64 zsh'
 alias ls='lsd'
 alias l='lsd -l'
 alias la='lsd -al'
-alias cd='z'
+if [ -z "$DISABLE_ZOXIDE" ]; then
+    alias cd='z'
+fi
 alias python='python3'
 alias cat='bat'
 alias cls='clear'
