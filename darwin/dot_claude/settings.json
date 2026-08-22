@@ -19,6 +19,7 @@
       "Bash(mysql:*)"
     ]
   },
+  "language": "Japanese",
   "env": {
     "DISABLE_TELEMETRY": "1",
     "DISABLE_ZOXIDE": "1"
