@@ -1,0 +1,3 @@
+# Nothing to exclude yet — darwin/ contains only dotfiles.
+# Add entries here (relative to this directory) if non-dotfile
+# files (docs, scripts) are ever added inside darwin/ itself.
