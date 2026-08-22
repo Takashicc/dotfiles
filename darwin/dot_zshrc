@@ -62,7 +62,6 @@ alias cat='bat'
 alias cls='clear'
 alias clip='pbcopy'
 alias pip='pip3'
-alias skitty="kitty +kitten ssh"
 alias code='cursor'
 alias rm='trash-put'
 alias docker-tidy='docker builder prune; docker image prune; docker system prune -a --filter "until=24h"'
