@@ -1,0 +1,8 @@
+{
+  "deno.path": "/Users/tak/.local/share/mise/shims/deno",
+  "go.goroot": "/Users/tak/.local/share/mise/installs/go/1.25.1",
+  "python.defaultInterpreterPath": "/Users/tak/.local/share/mise/installs/python/3.13.7/bin/python",
+  "go.alternateTools": {
+    "go": "/Users/tak/.local/share/mise/shims/go"
+  }
+}
