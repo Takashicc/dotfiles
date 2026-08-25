@@ -27,8 +27,8 @@
 	df = diff
 	pu = pull
 	gl = log --graph --oneline --decorate=full -20 --date=short --format=\"%C(yellow)%h%C(reset) %C(magenta)[%ad]%C(reset)%C(auto)%d%C(reset) %s %C(cyan)@%an%C(reset)\"
-	show-stale = "!git fetch --prune && git branch -vv | grep ': gone]' | awk '{print $1}' | sort"
-	cleanup-stale = "!git fetch --prune && git branch -vv | grep ': gone]' | awk '{print $1}' | sort | xargs git branch -d"
+	show-stale = "!git fetch --prune && git branch -vv | grep ': gone]' | sed 's/^[*+][[:space:]]*//' | awk '{print $1}' | sort"
+	cleanup-stale = "!git fetch --prune && git branch -vv | grep ': gone]' | sed 's/^[*+][[:space:]]*//' | awk '{print $1}' | sort | xargs -I {} git branch -D '{}'"
 	aicommit = "!f() { COMMITMSG=$(codex e -m 'gpt-5.6-luna' -c model_reasoning_effort='medium' 'Generate ONLY a one-line Git commit message in English, using imperative mood, summarizing what was changed and why, based strictly on the contents of `git diff --cached`. Do not add explanation or a body. Output only the commit summary line.'); git commit -m \"$COMMITMSG\" -e; }; f"
 [pull]
 	ff = only
