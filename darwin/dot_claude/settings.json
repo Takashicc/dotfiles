@@ -24,5 +24,9 @@
     ]
   },
   "language": "Japanese",
-  "model": "opus"
+  "model": "opus",
+  "tui": "fullscreen",
+  "enabledPlugins": {
+    "gopls-lsp@claude-plugins-official": true
+  }
 }

@@ -1,3 +1,5 @@
+setopt HIST_IGNORE_SPACE
+
 # --- Completion ---
 if type brew &>/dev/null
 then
@@ -44,6 +46,7 @@ eval "$(fzf --zsh)"
 eval "$(task --completion zsh)"
 
 # --- Environment Variables ---
+export GIT_EXTERNAL_DIFF=difft
 export VOLTA_HOME=~/.volta
 export GPG_TTY=$(tty)
 export AWS_DEFAULT_REGION=ap-northeast-1
