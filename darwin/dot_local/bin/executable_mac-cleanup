@@ -1,0 +1,511 @@
+#!/usr/bin/env zsh
+#
+# mac-cleanup - 開発ツールのキャッシュや macOS のゴミを掃除してディスクを空ける。
+#
+# 既定では対象一覧と対象領域の使用量を出してから確認を求める。
+# 詳しくは `mac-cleanup --help`。
+
+emulate -L zsh
+setopt no_unset pipe_fail null_glob
+
+readonly LOG_DAYS=30
+
+typeset -A DESC GROUP REQ TPATHS
+typeset -a ORDER
+
+DRY=0
+YES=0
+WITH_EXTRA=0
+FAILURES=0
+typeset -a ONLY SKIP
+
+# --- 出力ヘルパ ------------------------------------------------------------
+
+if [[ -t 1 ]]; then
+  C_RESET=$'\e[0m'; C_BOLD=$'\e[1m'; C_DIM=$'\e[2m'
+  C_GREEN=$'\e[32m'; C_YELLOW=$'\e[33m'; C_CYAN=$'\e[36m'
+else
+  C_RESET=; C_BOLD=; C_DIM=; C_GREEN=; C_YELLOW=; C_CYAN=
+fi
+
+info() { print -r -- "$@" }
+head1() { print -r -- "${C_BOLD}$*${C_RESET}" }
+warn() { print -ru2 -- "${C_YELLOW}$*${C_RESET}" }
+die() { print -ru2 -- "${C_YELLOW}error:${C_RESET} $*"; exit 1 }
+
+human() {
+  awk -v k="${1:-0}" 'BEGIN {
+    split("KB MB GB TB", u, " ")
+    i = 1; v = k
+    while (v >= 1024 && i < 4) { v /= 1024; i++ }
+    printf (i == 1 || v >= 100) ? "%.0f%s\n" : "%.1f%s\n", v, u[i]
+  }'
+}
+
+# --- 削除ヘルパ ------------------------------------------------------------
+
+# コマンドを実行する。dry-run なら表示のみ。
+run() {
+  print -r -- "  ${C_DIM}\$ $*${C_RESET}"
+  (( DRY )) && return 0
+  if "$@" >/dev/null 2>&1; then
+    return 0
+  fi
+  warn "  失敗したのでスキップ: $*"
+  (( ++FAILURES ))
+  return 1
+}
+
+# ディレクトリごと消す。
+rm_path() {
+  local p
+  for p in "$@"; do
+    [[ -n $p && $p != / && $p != $HOME ]] || continue
+    [[ -e $p ]] || continue
+    print -r -- "  ${C_DIM}rm -rf ${p/#$HOME/~}${C_RESET}"
+    if (( ! DRY )) && ! /bin/rm -rf -- "$p"; then
+      warn "  削除に失敗したのでスキップ: ${p/#$HOME/~}"
+      (( ++FAILURES ))
+    fi
+  done
+}
+
+# ディレクトリ自体は残して中身だけ消す。
+purge_dir() {
+  local p
+  for p in "$@"; do
+    [[ -n $p && $p != / && $p != $HOME ]] || continue
+    [[ -d $p ]] || continue
+    print -r -- "  ${C_DIM}rm -rf ${p/#$HOME/~}/*${C_RESET}"
+    if (( ! DRY )) && ! find "$p" -mindepth 1 -maxdepth 1 -exec /bin/rm -rf -- {} + 2>/dev/null; then
+      warn "  削除に失敗したのでスキップ: ${p/#$HOME/~}"
+      (( ++FAILURES ))
+    fi
+  done
+}
+
+# --- サイズ計測 ------------------------------------------------------------
+
+# 対象のパスを glob 展開して 1 行 1 パスで返す。
+target_paths() {
+  local -a out
+  local p
+  for p in ${(f)TPATHS[$1]}; do
+    [[ -n $p ]] || continue
+    out+=( ${~p} )
+  done
+  print -rl -- $out
+}
+
+# 対象の占有量を KB で返す。計測不能なら空。
+target_size_kb() {
+  local name=$1
+
+  if (( ${+functions[size_$name]} )); then
+    size_$name
+    return
+  fi
+
+  local -a paths
+  paths=( ${(f)"$(target_paths $name)"} )
+  (( ${#paths} )) || { print 0; return }
+
+  local total=0 kb p
+  for p in $paths; do
+    [[ -e $p ]] || continue
+    kb=$(du -sk -- "$p" 2>/dev/null | awk 'NR==1 {print $1}')
+    (( total += ${kb:-0} ))
+  done
+  print $total
+}
+
+avail_kb() { df -k "$HOME" | awk 'NR==2 {print $4}' }
+
+# --- 対象の定義 ------------------------------------------------------------
+
+# def <name> <group:default|extra> <required-cmd|-> <desc> <paths...>
+def() {
+  local name=$1 group=$2 req=$3 desc=$4
+  shift 4
+  ORDER+=( $name )
+  GROUP[$name]=$group
+  REQ[$name]=$req
+  DESC[$name]=$desc
+  TPATHS[$name]=${(F)@}
+}
+
+BREW_CACHE=
+(( $+commands[brew] )) && BREW_CACHE=$(brew --cache 2>/dev/null)
+PNPM_STORE=
+(( $+commands[pnpm] )) && PNPM_STORE=$(pnpm store path 2>/dev/null)
+
+def brew default brew \
+  "Homebrew のダウンロードキャッシュ" \
+  ${BREW_CACHE:-/nonexistent}
+
+def brew_autoremove extra brew \
+  "Homebrew の不要になった formula (サイズ計測不可)"
+
+def mise default mise \
+  "mise のダウンロードキャッシュ" \
+  ~/Library/Caches/mise ~/.cache/mise
+
+def mise_tools extra mise \
+  "mise のどの設定からも参照されていないツールバージョン" \
+  ~/.local/share/mise/installs
+
+def npm default npm \
+  "npm のダウンロードキャッシュ" \
+  ~/.npm/_cacache
+
+def pnpm default pnpm \
+  "pnpm ストアの未参照パッケージと、旧バージョンのストア" \
+  ${${PNPM_STORE:-/nonexistent/store}:h}
+
+def bun default bun \
+  "bun のインストールキャッシュ" \
+  ~/.bun/install/cache
+
+def uv default uv \
+  "uv の未参照キャッシュエントリ" \
+  ~/.cache/uv
+
+def go default go \
+  "Go のビルド/テストキャッシュと gopls・goimports・golangci-lint のキャッシュ" \
+  ~/Library/Caches/go-build ~/Library/Caches/goimports \
+  ~/Library/Caches/gopls ~/Library/Caches/golangci-lint
+
+def xcode default - \
+  "Xcode の DerivedData" \
+  ~/Library/Developer/Xcode/DerivedData
+
+def xcode_device_support extra - \
+  "iOS DeviceSupport (必要時に再取得)" \
+  "$HOME/Library/Developer/Xcode/iOS DeviceSupport"
+
+def xcode_simulators extra xcrun \
+  "使用不可の Simulator データ (サイズ計測不可)"
+
+def updaters default - \
+  "アプリ自動アップデータが残した中間ファイル (*.ShipIt / *-updater)" \
+  "$HOME/Library/Caches/*.ShipIt" "$HOME/Library/Caches/*-updater"
+
+def logs default - \
+  "${LOG_DAYS} 日以上前のアプリケーションログ" \
+  ~/Library/Logs
+
+def trash default - \
+  "ゴミ箱 (Finder と trash-cli の両方)" \
+  ~/.Trash ~/.local/share/Trash
+
+def gomod extra go \
+  "Go モジュールキャッシュ (次のビルドで再ダウンロードが走る)" \
+  ~/go/pkg/mod
+
+def cargo extra - \
+  "Cargo のレジストリキャッシュと展開済みソース" \
+  ~/.cargo/registry/cache ~/.cargo/registry/src
+
+def containers extra - \
+  "podman / docker の未使用イメージ・匿名ボリューム・ビルドキャッシュ"
+
+def browsers extra - \
+  "Chrome / Firefox のキャッシュ (実行中のブラウザは閉じてから)" \
+  ~/Library/Caches/Google ~/Library/Caches/Firefox
+
+def aitools extra - \
+  "Codex などの AI CLI が落としたランタイムとキャッシュ" \
+  ~/Library/Caches/com.openai.codex ~/Library/Caches/Codex ~/.cache/codex-runtimes
+
+def puppeteer extra - \
+  "Puppeteer がダウンロードした Chromium" \
+  ~/.cache/puppeteer
+
+def jetbrains extra - \
+  "JetBrains IDE のキャッシュとログ" \
+  ~/Library/Caches/JetBrains ~/Library/Logs/JetBrains
+
+# --- 各対象の掃除処理 ------------------------------------------------------
+
+size_logs() {
+  find ~/Library/Logs -type f -mtime +${LOG_DAYS} -exec stat -f '%z' {} + 2>/dev/null |
+    awk '{ s += $1 } END { printf "%d\n", (s + 1023) / 1024 }'
+}
+
+size_brew_autoremove() { print -n '' }
+size_xcode_simulators() { print -n '' }
+size_containers() { print -n '' }
+
+clean_brew() {
+  run brew cleanup --prune=all -s
+}
+
+clean_brew_autoremove() { run brew autoremove }
+
+clean_mise() {
+  run mise cache clear
+}
+
+clean_mise_tools() { run mise prune --tools --yes }
+
+clean_npm() { run npm cache clean --force }
+
+clean_pnpm() {
+  run pnpm store prune
+
+  # `pnpm store prune` は現行バージョンのストアしか見ないので、
+  # 使われなくなった旧 vN ディレクトリは手で消す。
+  [[ -n $PNPM_STORE ]] || return 0
+  local dir
+  for dir in ${PNPM_STORE:h}/v<->(N/); do
+    [[ ${dir:a} == ${PNPM_STORE:a} ]] && continue
+    rm_path $dir
+  done
+}
+
+clean_bun() { run bun pm cache rm }
+
+clean_uv() { run uv cache prune }
+
+clean_go() {
+  run go clean -cache -testcache
+  rm_path ~/Library/Caches/goimports ~/Library/Caches/gopls ~/Library/Caches/golangci-lint
+}
+
+clean_xcode() {
+  purge_dir ~/Library/Developer/Xcode/DerivedData
+}
+
+clean_xcode_device_support() {
+  purge_dir "$HOME/Library/Developer/Xcode/iOS DeviceSupport"
+}
+
+clean_xcode_simulators() {
+  if xcode-select -p >/dev/null 2>&1; then
+    run xcrun simctl delete unavailable
+  else
+    warn "  Xcode の選択状態を確認できないのでスキップ"
+    (( ++FAILURES ))
+    return 1
+  fi
+}
+
+clean_updaters() {
+  local -a targets
+  targets=( ${(f)"$(target_paths updaters)"} )
+  (( ${#targets} )) && rm_path $targets
+}
+
+clean_logs() {
+  print -r -- "  ${C_DIM}find ~/Library/Logs -type f -mtime +${LOG_DAYS} -delete${C_RESET}"
+  (( DRY )) && return 0
+  if ! find ~/Library/Logs -type f -mtime +${LOG_DAYS} -delete 2>/dev/null; then
+    warn "  古いログの削除に失敗"
+    (( ++FAILURES ))
+  fi
+  if ! find ~/Library/Logs -mindepth 1 -type d -empty -delete 2>/dev/null; then
+    warn "  空のログディレクトリの削除に失敗"
+    (( ++FAILURES ))
+  fi
+}
+
+clean_trash() {
+  if (( $+commands[trash-empty] )); then
+    run trash-empty -f
+  fi
+  purge_dir ~/.Trash
+}
+
+clean_gomod() { run go clean -modcache }
+
+clean_cargo() { rm_path ~/.cargo/registry/cache ~/.cargo/registry/src }
+
+clean_containers() {
+  if (( $+commands[podman] )) && podman info >/dev/null 2>&1; then
+    run podman system prune -af --volumes
+  else
+    info "  ${C_DIM}podman は起動していないのでスキップ${C_RESET}"
+  fi
+  if (( $+commands[docker] )) && docker info >/dev/null 2>&1; then
+    run docker system prune -af --volumes
+  else
+    info "  ${C_DIM}docker は起動していないのでスキップ${C_RESET}"
+  fi
+}
+
+clean_browsers() {
+  local app rc
+  for app in "Google Chrome" firefox; do
+    pgrep -qx "$app" >/dev/null 2>&1
+    rc=$?
+    case $rc in
+      0)
+        warn "  $app が実行中なのでスキップ。閉じてからやり直して"
+        (( ++FAILURES ))
+        return 1
+        ;;
+      1) ;;
+      *)
+        warn "  $app の実行状態を確認できないのでスキップ"
+        (( ++FAILURES ))
+        return 1
+        ;;
+    esac
+  done
+  purge_dir ~/Library/Caches/Google ~/Library/Caches/Firefox
+}
+
+clean_aitools() {
+  rm_path ~/Library/Caches/com.openai.codex ~/Library/Caches/Codex ~/.cache/codex-runtimes
+}
+
+clean_puppeteer() { rm_path ~/.cache/puppeteer }
+
+clean_jetbrains() { purge_dir ~/Library/Caches/JetBrains ~/Library/Logs/JetBrains }
+
+# --- 引数の解析 ------------------------------------------------------------
+
+usage() {
+  cat <<'EOF'
+使い方: mac-cleanup [オプション]
+
+開発ツールのキャッシュや macOS のゴミを掃除してディスクを空ける。
+実行前に対象と削除見込みサイズを一覧表示して確認を求める。
+
+オプション:
+  -n, --dry-run       消さずに一覧だけ表示する
+  -y, --yes           確認を省いて実行する
+  -a, --all           extra グループ (再取得コストが高いもの) も対象にする
+  -o, --only a,b,c    指定した対象だけを掃除する (グループ指定を無視)
+  -s, --skip a,b,c    指定した対象を除外する (--only と併用可)
+  -l, --list          対象の一覧を表示して終了する
+  -h, --help          このヘルプ
+
+例:
+  mac-cleanup                  # 既定の対象を確認付きで掃除
+  mac-cleanup -n -a            # 全対象の削除見込みサイズだけ確認
+  mac-cleanup -o brew,pnpm -y  # brew と pnpm だけを無確認で掃除
+EOF
+}
+
+while (( $# )); do
+  case $1 in
+    -n|--dry-run) DRY=1 ;;
+    -y|--yes) YES=1 ;;
+    -a|--all) WITH_EXTRA=1 ;;
+    -o|--only) shift; (( $# )) || die "--only には対象名が必要"; ONLY=( ${(s:,:)1} ) ;;
+    -s|--skip) shift; (( $# )) || die "--skip には対象名が必要"; SKIP=( ${(s:,:)1} ) ;;
+    -l|--list)
+      head1 "掃除できる対象:"
+      for n in $ORDER; do
+        printf '  %-22s %-8s %s\n' $n "[${GROUP[$n]}]" ${DESC[$n]}
+      done
+      exit 0 ;;
+    -h|--help) usage; exit 0 ;;
+    *) die "不明なオプション: $1 (--help を参照)" ;;
+  esac
+  shift
+done
+
+for n in $ONLY $SKIP; do
+  (( ${ORDER[(Ie)$n]} )) || die "不明な対象: $n (--list を参照)"
+done
+
+# --- 対象の選択 ------------------------------------------------------------
+
+typeset -a selected
+for n in $ORDER; do
+  if (( ${#ONLY} )); then
+    (( ${ONLY[(Ie)$n]} )) || continue
+  else
+    [[ ${GROUP[$n]} == default ]] || (( WITH_EXTRA )) || continue
+  fi
+  (( ${SKIP[(Ie)$n]} )) && continue
+  [[ ${REQ[$n]} == - ]] || (( $+commands[${REQ[$n]}] )) || continue
+  selected+=( $n )
+done
+
+(( ${#selected} )) || die "対象がひとつも選ばれていない"
+
+# --- 計画の表示 ------------------------------------------------------------
+
+typeset -A BEFORE
+total_kb=0
+total_unknown=0
+
+head1 "掃除の対象"
+print -r -- "${C_DIM}サイズは対象領域の現在の使用量。計測不可は ?。全部が消えるとは限らない (prune 系は未参照分のみ)。${C_RESET}"
+print -r -- ""
+for n in $selected; do
+  BEFORE[$n]=$(target_size_kb $n)
+  if [[ -z ${BEFORE[$n]} ]]; then
+    shown='?'
+    (( ++total_unknown ))
+  else
+    shown=$(human ${BEFORE[$n]})
+    (( total_kb += BEFORE[$n] ))
+  fi
+  printf '  %-22s %8s  %s\n' $n $shown ${DESC[$n]}
+done
+print -r -- ""
+if (( total_unknown )); then
+  printf '  %-11s %8s\n' "合計" "$(human $total_kb) + ?"
+else
+  printf '  %-11s %8s\n' "合計" "$(human $total_kb)"
+fi
+print -r -- "  ${C_DIM}ディスク空き: $(human $(avail_kb))${C_RESET}"
+print -r -- ""
+
+if (( DRY )); then
+  info "${C_DIM}dry-run なので何も消していない。実行するなら -n を外す。${C_RESET}"
+  exit 0
+fi
+
+if (( ! YES )); then
+  if [[ ! -t 0 ]]; then
+    die "対話端末ではないので中断した。実行するなら -y を付ける。"
+  fi
+  print -n "上記を削除する? [y/N] "
+  read -r reply
+  [[ $reply == [yY]* ]] || { info "中止した。"; exit 0 }
+  print -r -- ""
+fi
+
+# --- 実行 ------------------------------------------------------------------
+
+avail_before=$(avail_kb)
+freed_kb=0
+freed_unknown=0
+
+for n in $selected; do
+  head1 "==> $n"
+  clean_$n
+  after=$(target_size_kb $n)
+  if [[ -n ${BEFORE[$n]} && -n $after ]]; then
+    (( diff = BEFORE[$n] - after ))
+    (( diff > 0 )) && (( freed_kb += diff ))
+    print -r -- "  ${C_GREEN}$(human $(( diff > 0 ? diff : 0 ))) 回収${C_RESET}"
+  else
+    freed_unknown=1
+  fi
+done
+
+avail_after=$(avail_kb)
+(( delta = avail_after - avail_before ))
+
+print -r -- ""
+if (( FAILURES )); then
+  head1 "一部失敗"
+else
+  head1 "完了"
+fi
+if (( freed_unknown )); then
+  print -r -- "  対象から回収: ${C_GREEN}? (計測できない対象あり)${C_RESET}"
+else
+  print -r -- "  対象から回収: ${C_GREEN}$(human $freed_kb)${C_RESET}"
+fi
+print -r -- "  ディスク空き: $(human $avail_before) -> ${C_CYAN}$(human $avail_after)${C_RESET} (差分 $(human $(( delta > 0 ? delta : 0 ))))"
+if (( FAILURES )); then
+  print -r -- "  失敗: ${FAILURES} 件"
+  exit 1
+fi

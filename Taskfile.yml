@@ -21,6 +21,16 @@ tasks:
       vars:
         ARGS: add {{.file}} {{.CLI_ARGS}}
 
+  re-add:
+    desc: Import changes from a managed file
+    requires:
+      vars:
+        - file
+    cmd:
+      task: internal-chezmoi
+      vars:
+        ARGS: re-add {{.file}} {{.CLI_ARGS}}
+
   apply:
     desc: Apply changes
     cmd:

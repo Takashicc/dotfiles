@@ -51,7 +51,34 @@ Prefer the Task wrappers over calling chezmoi directly:
 
 ```sh
 task add file=~/.some/new/config   # register a new file
+task re-add file=~/.config/mise/config.toml  # import changes from a managed file
 task diff                          # preview changes
 task apply                         # apply changes
 task status                        # show status
 ```
+
+## Scripts
+
+Scripts under `darwin/dot_local/bin/` land in `~/.local/bin`, which `.zshrc`
+puts on `PATH`.
+
+### `mac-cleanup`
+
+Reclaims disk space from developer caches and macOS junk. It always prints the
+targets and their current sizes first (`?` for targets that cannot be measured),
+then asks before deleting anything.
+
+```sh
+mac-cleanup           # clean the default targets, with a confirmation prompt
+mac-cleanup -n -a     # dry run over every target, including the extra group
+mac-cleanup -l        # list the targets
+mac-cleanup -o brew,pnpm -y
+```
+
+Default targets are caches that rebuild cheaply: Homebrew, mise, npm, pnpm,
+bun, uv, Go build cache, Xcode DerivedData, app-updater leftovers, logs older
+than 30 days, and the trash. The `extra` group (`-a`) adds ones that are
+pricier to refill or more disruptive: Homebrew's unused formulae, unused mise
+tool versions, the Go module cache, Cargo registry, Xcode DeviceSupport and
+unavailable simulators, container images and anonymous volumes, browser
+caches, AI CLI runtimes, Puppeteer's Chromium, and JetBrains caches.
