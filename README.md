@@ -41,6 +41,10 @@ mise install
 source ~/.zshrc
 ```
 
+On Apple Silicon, `mise install --locked` requires the versions recorded in the
+tracked `mise.lock`. The lockfile uses format 1 so it can include the source-only
+`trash-cli`. For npm and PyPI tools, this format pins the tool version.
+
 ## Linux bootstrap
 
 Not yet available — `linux/` is a placeholder. See `linux/README.md`.
